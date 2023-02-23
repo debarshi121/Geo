@@ -5,28 +5,56 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+		<link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet" />
+		<style>
+			.marker {
+				background-image: url("marker.png");
+				background-size: cover;
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				cursor: pointer;
+			}
+		</style>
 	</head>
 	<body>
-        <section class="mx-auto flex flex-col gap-3 items-center py-20 text-xl">
-           <div><span>Accuracy:</span> <span id="accuracy"></span></div>
-           <div><span>Altitude:</span> <span id="altitude"></span></div>
-           <div><span>Altitude Accuracy:</span> <span id="altitudeAccuracy"></span></div>
-           <div><span>Heading:</span> <span id="heading"></span></div>
-           <div><span>Latitude:</span> <span id="latitude"></span></div>
-           <div><span>Longitude:</span> <span id="longitude"></span></div>
-           <div><span>Speed:</span> <span id="speed"></span></div>
-        </section>
+		<section class="mx-auto flex flex-col gap-3 items-center py-20 text-xl">
+			<div><span>Accuracy:</span> <span id="accuracy"></span></div>
+			<div><span>Altitude:</span> <span id="altitude"></span></div>
+			<div><span>Altitude Accuracy:</span> <span id="altitudeAccuracy"></span></div>
+			<div><span>Heading:</span> <span id="heading"></span></div>
+			<div><span>Latitude:</span> <span id="latitude"></span></div>
+			<div><span>Longitude:</span> <span id="longitude"></span></div>
+			<div><span>Speed:</span> <span id="speed"></span></div>
+		</section>
+		<section id="map" class="mx-auto my-10 h-96 w-96"></section>
 		<script>
+            mapboxgl.accessToken = "pk.eyJ1IjoiZGViYXJzaGkxMjEiLCJhIjoiY2xlZ3J3eTdiMHJlZDNwbXEwYzV3eTB1ZyJ9.P4EBI03JDcUVnwawK-byhA";
+			
+            const map = new mapboxgl.Map({
+				container: "map",
+				style: "mapbox://styles/mapbox/streets-v12",
+				center: [91.7883, 26.1209],
+				zoom: 15,
+			});
+
+			const el = document.createElement("div");
+			el.className = "marker";
+
+			
+
 			function success(pos) {
 				const crd = pos.coords;
-                document.getElementById("accuracy").innerHTML = `${Math.round(crd.accuracy)} Meters`
-                document.getElementById("altitude").innerHTML = crd.altitude
-                document.getElementById("altitudeAccuracy").innerHTML = crd.altitudeAccuracy
-                document.getElementById("heading").innerHTML = crd.heading
-                document.getElementById("latitude").innerHTML = crd.latitude
-                document.getElementById("longitude").innerHTML = crd.longitude
-                document.getElementById("speed").innerHTML = `${Math.round(crd.speed * 3.6)} KM/hr`
+				document.getElementById("accuracy").innerHTML = `${Math.round(crd.accuracy)} Meters`;
+				document.getElementById("altitude").innerHTML = crd.altitude;
+				document.getElementById("altitudeAccuracy").innerHTML = crd.altitudeAccuracy;
+				document.getElementById("heading").innerHTML = crd.heading;
+				document.getElementById("latitude").innerHTML = crd.latitude;
+				document.getElementById("longitude").innerHTML = crd.longitude;
+				document.getElementById("speed").innerHTML = `${Math.round(crd.speed * 3.6)} KM/hr`;
+                new mapboxgl.Marker(el).setLngLat([crd.longitude, crd.latitude]).addTo(map);
 			}
 
 			function error(err) {
@@ -40,9 +68,10 @@
 			};
 
 			setInterval(() => {
-                navigator.geolocation.getCurrentPosition(success, error, options);
-            }, 1000);
+				navigator.geolocation.getCurrentPosition(success, error, options);
+			}, 1000);
 
+			
 		</script>
 	</body>
 </html>
