@@ -20,7 +20,6 @@
 		<script>
 			function success(pos) {
 				const crd = pos.coords;
-				console.log(crd);
                 document.getElementById("accuracy").innerHTML = crd.accuracy
                 document.getElementById("altitude").innerHTML = crd.altitude
                 document.getElementById("altitudeAccuracy").innerHTML = crd.altitudeAccuracy
@@ -43,7 +42,7 @@
 			setInterval(() => {
                 navigator.geolocation.getCurrentPosition(success, error, options);
             }, 1000);
-            
+
 		</script>
 	</body>
 </html>
