@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+        <section class="mx-auto flex flex-col gap-3 items-center py-20 text-xl">
+           <div><span>Accuracy:</span> <span id="accuracy"></span></div>
+           <div><span>Altitude:</span> <span id="altitude"></span></div>
+           <div><span>Altitude Accuracy:</span> <span id="altitudeAccuracy"></span></div>
+           <div><span>Heading:</span> <span id="heading"></span></div>
+           <div><span>Latitude:</span> <span id="latitude"></span></div>
+           <div><span>Longitude:</span> <span id="longitude"></span></div>
+           <div><span>Speed:</span> <span id="speed"></span></div>
+        </section>
+		<script>
+			function success(pos) {
+				const crd = pos.coords;
+				console.log(crd);
+                document.getElementById("accuracy").innerHTML = crd.accuracy
+                document.getElementById("altitude").innerHTML = crd.altitude
+                document.getElementById("altitudeAccuracy").innerHTML = crd.altitudeAccuracy
+                document.getElementById("heading").innerHTML = crd.heading
+                document.getElementById("latitude").innerHTML = crd.latitude
+                document.getElementById("longitude").innerHTML = crd.longitude
+                document.getElementById("speed").innerHTML = crd.speed
+			}
+
+			function error(err) {
+				console.log(err);
+			}
+
+			let options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0,
+			};
+
+			setInterval(() => {
+                navigator.geolocation.getCurrentPosition(success, error, options);
+            }, 1000);
+            
+		</script>
+	</body>
+</html>
