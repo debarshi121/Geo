@@ -20,13 +20,13 @@
 		<script>
 			function success(pos) {
 				const crd = pos.coords;
-                document.getElementById("accuracy").innerHTML = crd.accuracy
+                document.getElementById("accuracy").innerHTML = `${Math.round(crd.accuracy)} Meters`
                 document.getElementById("altitude").innerHTML = crd.altitude
                 document.getElementById("altitudeAccuracy").innerHTML = crd.altitudeAccuracy
                 document.getElementById("heading").innerHTML = crd.heading
                 document.getElementById("latitude").innerHTML = crd.latitude
                 document.getElementById("longitude").innerHTML = crd.longitude
-                document.getElementById("speed").innerHTML = crd.speed
+                document.getElementById("speed").innerHTML = `${Math.round(crd.speed * 3.6)} KM/hr`
 			}
 
 			function error(err) {
